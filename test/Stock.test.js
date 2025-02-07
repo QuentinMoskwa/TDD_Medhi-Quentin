@@ -26,10 +26,9 @@ describe("When I try to add an article in the stock", () => {
       expect(stock.articles[0].quantity).toBe(12);
     });
 
-    test("with a laptop with a quantity of 0, I should get the same quantity", () => {
+    test("with a laptop with a quantity of 0, I should get an error", () => {
       const stock = new Stock();
-      stock.addArticleToStock(0, 0);
-      expect(stock.articles[0].quantity).toBe(10);
+      expect(() => stock.addArticleToStock(0, 0)).toThrow("quantity must not be 0");
     });
 
     test("with a laptop with a string id, I should get an error", () => {
@@ -101,3 +100,24 @@ describe("When I try to remove an article in the stock", () => {
     });
 });
 
+// Quand j'essaye d'afficher le rapport :
+// Si j'essaye d'afficher le rapport alors on affiche la quantité par article.
+// Si j'essaye d'afficher le rapport mais que l'une des quantités est en erreur alors je la remonte.
+
+describe("When I try to show the report", () => {
+    test("I should get the quantity of each article", () => {
+        const stock = new Stock();
+        expect(stock.showReport()).toEqual([
+            {id: 0, name: "Laptop", quantity: 10},
+            {id: 1, name: "Mouse", quantity: 25},
+            {id: 2, name: "Keyboard", quantity: 15},
+            {id: 3, name: "Monitor", quantity: 8},
+            {id: 4, name: "USB Cable", quantity: 30},
+            {id: 5, name: "Headphones", quantity: 12},
+            {id: 6, name: "Webcam", quantity: 9},
+            {id: 7, name: "Printer", quantity: 5},
+            {id: 8, name: "Router", quantity: 14},
+            {id: 9, name: "External HDD", quantity: 7}
+        ]);
+    });
+});
