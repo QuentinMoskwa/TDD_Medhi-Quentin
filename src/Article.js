@@ -4,6 +4,8 @@ class Article {
         this.name = name;
         this.quantity = quantity;
     }
+
 }
 
-module.exports = Article
+
+module.exports = Article;

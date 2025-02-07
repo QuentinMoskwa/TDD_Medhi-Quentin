@@ -18,3 +18,41 @@ describe("When I try to show my quantity", () => {
         expect(() => stock.showArticleQuantity("string")).toThrow("Invalid Id");
     });
 });
+
+describe("When I try to add an article in the stock", () => {
+    test("with a laptop with a quantity of 2, I should get the quantity + 2", () => {
+      const stock = new Stock();
+      stock.addArticleToStock(0, 2);
+      expect(stock.articles[0].quantity).toBe(12);
+    });
+
+    test("with a laptop with a quantity of 0, I should get the same quantity", () => {
+      const stock = new Stock();
+      stock.addArticleToStock(0, 0);
+      expect(stock.articles[0].quantity).toBe(10);
+    });
+
+    test("with a laptop with a string id, I should get an error", () => {
+        const stock = new Stock();
+        expect(() => stock.addArticleToStock("10", 2)).toThrow("id must be an integer");
+    });
+    test("with a laptop with a decimal id, I should get an error", () => {
+        const stock = new Stock();
+        expect(() => stock.addArticleToStock(2.2, 2)).toThrow("id must be an integer");
+    });
+    
+    test("with a laptop with a quantity of 2.5, I should get an error", () => {
+        const stock = new Stock();
+        expect(() => stock.addArticleToStock(0, 2.5)).toThrow("Quantity must be an integer");
+    });
+
+    test("with a laptop with a quantity of -2, I should get an error", () => {
+      const stock = new Stock();
+      expect(() => stock.addArticleToStock(0, -2)).toThrow("Quantity must be positive");
+    });
+
+    test("with a non existent article, I should get an error", () => {
+      const stock = new Stock();
+      expect(() => stock.addArticleToStock(10, 2)).toThrow("Must be a valid article");
+    });
+});
