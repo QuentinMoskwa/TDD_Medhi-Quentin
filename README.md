@@ -26,7 +26,7 @@ showStockRapport()
 
 Quand j'essaye d'ajouter un article :
 Si j'ajoute 2x laptop(id:0) alors on ajoute 2 laptop dans le stock.
-Si j'ajoute 0x laptop(id:0) alors il ne se passe rien.
+Si j'ajoute 0x laptop(id:0) alors il y a une erreur. (correction)
 Si j'ajoute un autre chose que la quantité d'un article alors il m'est retourné une erreur.
 Si j'ajoute une valeur négative de laptop alors il m'est retourné une erreur.
 Si j'ajoute une valeur décimale de laptop alors il m'est retourné une erreur.
@@ -48,4 +48,4 @@ Si l'ID n'existe pas, une erreur est renvoyée.
 Si l'ID ou quantité n'est pas un entier, une erreur est renvoyée.
 Si la quantité est négative, une erreur est renvoyée.
 Si la quantité est supérieure à celle en stock, une erreur est renvoyée.
-Si la quantité est égale à zéro, aucune action n'est effectuée.
+Si la quantité est égale à zéro, erreur (correction)

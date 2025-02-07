@@ -1,5 +1,5 @@
 const Article = require("./Article");
-class Stock{
+class Stock {
   articles = [
     new Article(0, "Laptop", 10),
     new Article(1, "Mouse", 25),
@@ -12,33 +12,41 @@ class Stock{
     new Article(8, "Router", 14),
     new Article(9, "External HDD", 7),
   ];
-  
+
   addArticleToStock(idOfArticle, quantity) {
-        if (Number.isInteger(idOfArticle) === false) {
-            throw new Error("id must be an integer");
-        }
-        if (Number.isInteger(quantity) === false) {
-          throw new Error("Quantity must be an integer");
-        }
-        if (quantity < 0) {
-            throw new Error("Quantity must be positive");
-        }
-        if (!(this.articles[idOfArticle] instanceof Article)) {
-            throw new Error("Must be a valid article");
-        }
-        this.articles[idOfArticle].quantity += quantity;
+    if (quantity == 0) {
+      throw new Error("quantity must not be 0");
     }
-  
-  showArticleQuantity(idOfArticle){
-    if(!Number.isInteger(idOfArticle)){
+    if (Number.isInteger(idOfArticle) === false) {
+      throw new Error("id must be an integer");
+    }
+    if (Number.isInteger(quantity) === false) {
+      throw new Error("Quantity must be an integer");
+    }
+    if (quantity < 0) {
+      throw new Error("Quantity must be positive");
+    }
+    if (!(this.articles[idOfArticle] instanceof Article)) {
+      throw new Error("Must be a valid article");
+    }
+    this.articles[idOfArticle].quantity += quantity;
+  }
+
+  showArticleQuantity(idOfArticle) {
+    if (!Number.isInteger(idOfArticle)) {
       throw new Error("Invalid Id");
     }
 
-    if(!this.articles.some(item => item.id === idOfArticle)){
+    if (!this.articles.some((item) => item.id === idOfArticle)) {
       throw new Error("Article doesn't exist");
     }
 
     return this.articles[idOfArticle].quantity;
+  }
+
+  showReport()
+  {
+    return (this.articles);
   }
 }
 
