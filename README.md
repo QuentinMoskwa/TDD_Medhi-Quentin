@@ -16,19 +16,23 @@ Article
 }
 
 
-addArticleToStock(Article)
-si négatif erreur
-si l'article erreur
-si 0 il ne se passe rien
+addArticleToStock(idOfArticle, quantity)
 
-showArticleQuantity(Article, Stock)
-si l'article erreur
+showArticleQuantity(idOfArticle)
 
-removeStockArticle(Article, nbStock)
-si la quantité erreur
-si l'article erreur
+removeStockArticle(idOfArticle, quantity)
 
 showStockRapport()
-flag si quantité faible ou 0
 
+Quand j'essaye d'ajouter un article :
+Si j'ajoute 2x laptop(id:0) alors on ajoute 2 laptop dans le stock.
+Si j'ajoute 0x laptop(id:0) alors il ne se passe rien.
+Si j'ajoute un autre chose que la quantité d'un article alors il m'est retourné une erreur.
+Si j'ajoute une valeur négative de laptop alors il m'est retourné une erreur.
+Si j'ajoute une valeur décimale de laptop alors il m'est retourné une erreur.
+Si j'ajoute un article qui n'existe pas alors il m'est retourné une erreur.
+Si j'ajoute un article qui n'est pas du bon type alors il m'est retourné une erreur.
 
+Quand j'essaye d'afficher le rapport :
+Si j'essaye d'afficher le rapport alors on affiche la quantité par article.
+Si j'essaye d'afficher le rapport mais que l'une des quantités est en erreur alors je la remonte.
