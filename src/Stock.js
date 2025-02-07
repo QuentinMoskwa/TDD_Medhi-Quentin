@@ -29,19 +29,56 @@ class Stock {
     if (!(this.articles[idOfArticle] instanceof Article)) {
       throw new Error("Must be a valid article");
     }
-    this.articles[idOfArticle].quantity += quantity;
-  }
-
-  showArticleQuantity(idOfArticle) {
-    if (!Number.isInteger(idOfArticle)) {
+  
+  showArticleQuantity(idOfArticle){
+    if(!this.checkIfIsInt(idOfArticle)){
       throw new Error("Invalid Id");
     }
 
-    if (!this.articles.some((item) => item.id === idOfArticle)) {
-      throw new Error("Article doesn't exist");
-    }
+    this.checkIfArticleExist(idOfArticle);
 
     return this.articles[idOfArticle].quantity;
+  }
+
+  removeStockArticle(idOfArticle, quantity){
+    if(!this.checkIfIsInt(idOfArticle)){
+      throw new Error("Id should be an Int");
+    }
+
+    if(!this.checkIfIsInt(quantity)){
+      throw new Error("Quantity should be an Int");
+    }
+
+    if(quantity <= 0){
+      throw new Error("Quantity should be > 0");
+    }
+
+    if(!this.checkIfPositive(idOfArticle)){
+      throw new Error("Id should be > 0");
+    }
+
+    this.checkIfArticleExist(idOfArticle);
+
+    if(quantity > this.articles[idOfArticle].quantity){
+      throw new Error("Invalid quantity");
+    }
+
+    return this.articles[idOfArticle].quantity -= quantity;
+
+  }
+  
+  checkIfArticleExist(idOfArticle){
+    if(!this.articles.some(item => item.id === idOfArticle)){
+      throw new Error("Article doesn't exist");
+    }
+  }
+
+  checkIfIsInt(number){
+    return Number.isInteger(number);
+  }
+
+  checkIfPositive(number){
+    return number >= 0;
   }
 
   showReport()
