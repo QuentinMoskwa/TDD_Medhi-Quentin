@@ -6,4 +6,4 @@ class Article {
     }
 }
 
-export default Article;
+module.exports = Article
