@@ -1,17 +1,23 @@
 const Article = require("../src/Article");
 const Stock = require("../src/Stock");
 
-// Quand j'essaye d'ajouter un article :
-// Si j'ajoute 2x laptop(id:0) alors on ajoute 2 laptop dans le stock.
-// Si j'ajoute 0x laptop(id:0) alors il ne se passe rien.
-// Si j'ajoute un autre chose que la quantité d'un article alors il m'est retourné une erreur.
-// Si j'ajoute une valeur négative de laptop alors il m'est retourné une erreur.
-// Si j'ajoute une valeur décimale de laptop alors il m'est retourné une erreur.
-// Si j'ajoute un article qui n'existe pas alors il m'est retourné une erreur.
-// Si j'ajoute un article qui n'est pas du bon type alors il m'est retourné une erreur.
+describe("When I try to show my quantity", () => {
+    test('with id, I should get quantity', () => {
+        const stock = new Stock()
+        expect(stock.showArticleQuantity(2)).toBe(15);
+    });
 
-// addArticleToStock(idOfArticle, quantity);
+    test("with id that don't exist, I should get an error", () => {
+        const stock = new Stock()
+        expect(() => stock.showArticleQuantity(100)).toThrow("Article doesn't exist");
 
+    });
+
+    test("with something other than int, I should get an error", () => {
+        const stock = new Stock()
+        expect(() => stock.showArticleQuantity("string")).toThrow("Invalid Id");
+    });
+});
 
 describe("When I try to add an article in the stock", () => {
     test("with a laptop with a quantity of 2, I should get the quantity + 2", () => {
