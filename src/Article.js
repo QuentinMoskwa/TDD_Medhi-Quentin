@@ -4,6 +4,7 @@ class Article {
         this.name = name;
         this.quantity = quantity;
     }
+
 }
 
-export default Article;
+module.exports = Article;
