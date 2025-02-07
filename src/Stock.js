@@ -30,15 +30,54 @@ class Stock{
     }
   
   showArticleQuantity(idOfArticle){
-    if(!Number.isInteger(idOfArticle)){
+    if(!this.checkIfIsInt(idOfArticle)){
       throw new Error("Invalid Id");
     }
 
+    this.checkIfArticleExist(idOfArticle);
+
+    return this.articles[idOfArticle].quantity;
+  }
+
+  removeStockArticle(idOfArticle, quantity){
+    if(!this.checkIfIsInt(idOfArticle)){
+      throw new Error("Id should be an Int");
+    }
+
+    if(!this.checkIfIsInt(quantity)){
+      throw new Error("Quantity should be an Int");
+    }
+
+    if(quantity <= 0){
+      throw new Error("Quantity should be > 0");
+    }
+
+    if(!this.checkIfPositive(idOfArticle)){
+      throw new Error("Id should be > 0");
+    }
+
+    this.checkIfArticleExist(idOfArticle);
+
+    if(quantity > this.articles[idOfArticle].quantity){
+      throw new Error("Invalid quantity");
+    }
+
+    return this.articles[idOfArticle].quantity -= quantity;
+
+  }
+  
+  checkIfArticleExist(idOfArticle){
     if(!this.articles.some(item => item.id === idOfArticle)){
       throw new Error("Article doesn't exist");
     }
+  }
 
-    return this.articles[idOfArticle].quantity;
+  checkIfIsInt(number){
+    return Number.isInteger(number);
+  }
+
+  checkIfPositive(number){
+    return number >= 0;
   }
 }
 

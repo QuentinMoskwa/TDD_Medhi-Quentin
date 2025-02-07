@@ -56,3 +56,48 @@ describe("When I try to add an article in the stock", () => {
       expect(() => stock.addArticleToStock(10, 2)).toThrow("Must be a valid article");
     });
 });
+
+describe("When I try to remove an article in the stock", () => {
+    test("with an id and quantity, I should remove the article ", () => {
+      const stock = new Stock();
+      stock.removeStockArticle(0, 2);
+      expect(stock.articles[0].quantity).toBe(8);
+    });
+
+    test("with an id that doesn't exist, I should get error", () => {
+      const stock = new Stock();
+      expect(() => stock.removeStockArticle(100, 2)).toThrow("Article doesn't exist");
+    });
+
+    test("with a quantity that isn't an int, I should get error", () => {
+        const stock = new Stock();
+        expect(() => stock.removeStockArticle(1, "string")).toThrow("Quantity should be an Int");
+    });
+
+    test("with an id that isn't an int, I should get error", () => {
+        const stock = new Stock();
+        expect(() => stock.removeStockArticle("string", 2)).toThrow("Id should be an Int");
+    });
+
+    test("with a quantity < 0, I should get error", () => {
+        const stock = new Stock();
+        expect(() => stock.removeStockArticle(1, -3)).toThrow("Quantity should be > 0");
+    });
+
+    test("with an id < 0, I should get error", () => {
+        const stock = new Stock();
+        expect(() => stock.removeStockArticle(-7, 2)).toThrow("Id should be > 0");
+    });
+
+    test("with a quantity > than the quantity in stock, I should get error", () => {
+        const stock = new Stock();
+        expect(() => stock.removeStockArticle(0, 200)).toThrow("Invalid quantity");
+    });
+
+
+    test("with a quantity  = 0, I should get error", () => {
+        const stock = new Stock();
+        expect(() => stock.removeStockArticle(0, 0)).toThrow("Quantity should be > 0");
+    });
+});
+
