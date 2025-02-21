@@ -16,7 +16,7 @@ describe("When I try to show my quantity", () => {
 
     test("with something other than int, I should get an error", () => {
         const stock = new Stock()
-        expect(() => stock.showArticleQuantity("string")).toThrow("Invalid Id");
+        expect(() => stock.showArticleQuantity("string")).toThrow("Id should be an Int");
     });
 });
 
@@ -34,16 +34,16 @@ describe("When I try to add an article in the stock", () => {
 
     test("with a laptop with a string id, I should get an error", () => {
         const stock = new Stock();
-        expect(() => stock.addArticleToStock("10", 2)).toThrow("id must be an integer");
+        expect(() => stock.addArticleToStock("10", 2)).toThrow("Id should be an Int");
     });
     test("with a laptop with a decimal id, I should get an error", () => {
         const stock = new Stock();
-        expect(() => stock.addArticleToStock(2.2, 2)).toThrow("id must be an integer");
+        expect(() => stock.addArticleToStock(2.2, 2)).toThrow("Id should be an Int");
     });
     
     test("with a laptop with a quantity of 2.5, I should get an error", () => {
         const stock = new Stock();
-        expect(() => stock.addArticleToStock(0, 2.5)).toThrow("Quantity must be an integer");
+        expect(() => stock.addArticleToStock(0, 2.5)).toThrow("Quantity should be an Int");
     });
 
     test("with a laptop with a quantity of -2, I should get an error", () => {
@@ -120,6 +120,42 @@ describe("When I try to show the report", () => {
             {id: 8, name: "Router", quantity: 14},
             {id: 9, name: "External HDD", quantity: 7}
         ]);
+    });
+});
+
+describe("When I receive a notification", () => {
+    test("If I remove an article and the quantity dropdown, I should get a notification", () => {
+        const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+        const stock = new Stock();
+        stock.removeStockArticle(0, 6);
+        expect(consoleSpy).toHaveBeenLastCalledWith("La quantité d'article est faible");
+        consoleSpy.mockRestore();
+    });
+
+    test("If I remove an article and the quantity dont dropdown, I should get nothing", () => {
+        const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+        const stock = new Stock();
+        stock.removeStockArticle(0, 5);
+        expect(consoleSpy).not.toHaveBeenCalled();
+        consoleSpy.mockRestore();
+    });
+});
+
+describe("When I receive a notification", () => {
+    test("If I remove an article and the quantity dropdown, I should get a notification", () => {
+        const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+        const stock = new Stock();
+        stock.removeStockArticle(0, 6);
+        expect(consoleSpy).toHaveBeenLastCalledWith("La quantité d'article est faible");
+        consoleSpy.mockRestore();
+    });
+
+    test("If I remove an article and the quantity dont dropdown, I should get nothing", () => {
+        const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+        const stock = new Stock();
+        stock.removeStockArticle(0, 5);
+        expect(consoleSpy).not.toHaveBeenCalled();
+        consoleSpy.mockRestore();
     });
 });
 
