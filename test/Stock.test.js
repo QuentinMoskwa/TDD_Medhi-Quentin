@@ -1,4 +1,5 @@
 const Article = require("../src/Article");
+const Movement = require("../src/Movement");
 const Stock = require("../src/Stock");
 
 describe("When I try to show my quantity", () => {
@@ -119,5 +120,61 @@ describe("When I try to show the report", () => {
             {id: 8, name: "Router", quantity: 14},
             {id: 9, name: "External HDD", quantity: 7}
         ]);
+    });
+});
+
+
+// Lorsque j'essaye d'ajouter un mouvement dans l'historique : 
+// * Si l'article existe et que je décide d'ajouter un article au stock alors un mouvement est ajouté dans l'historique avec la date, heure et la quantité de ce mouvement.
+// * Si l'article existe et que je décide d'enlever un article qui contient assez de quantité au stock alors un mouvement est ajouté dans l'historique avec la date et la quantité de ce mouvement.
+// * Si la quantité de l'article est négative et que j'essaye de retirer alors j'ai une erreur.
+// * Si l'article n'existe pas alors je retourne une erreur.
+// * Si la valeur de la quantité n'est pas valide alors je retourne une erreur.
+// * Si l'ajout d'article retourne une erreur alors je traite cette erreur
+// * Si le retrait d'article retourne une erreur alors je traite cette erreur
+// * Si le type d'opération n'est pas valide retourner une erreur
+
+describe("When I try to add a movement in the history", () => {
+    test("adding with a valid id and quantity, I should add a movement in the history", () => {
+        const stock = new Stock();
+        const newMovement = stock.addMovement(0, 2, "add");
+        const movement = new Movement(1, "add", 0, "01/01/2025 12:00:00", 2);
+        expect(newMovement).toEqual(movement);
+    });
+
+    test("adding with a valid id and quantity, I should add a movement in the history", () => {
+        const stock = new Stock();
+        const newMovement = stock.addMovement(0, 2, "remove");
+        const movement = new Movement(1, "remove", 0, "01/01/2025 12:00:00", 2);
+        expect(newMovement).toEqual(movement);
+    });
+
+    test("with a negative quantity, I should get an error", () => {
+        const stock = new Stock();
+        expect(() => stock.addMovement(0, -2, "remove")).toThrow("Quantity should be > 0");
+    });
+
+    test("with an articleId that doesn't exist, I should get an error", () => {
+        const stock = new Stock();
+        expect(() => stock.addMovement(10, 2, "remove")).toThrow("Article doesn't exist");
+    });
+
+    test("with an invalid quantity, I should get an error", () => {
+        const stock = new Stock();
+        expect(() => stock.addMovement(0, "2", "remove")).toThrow("Quantity should be an Int");
+    });
+
+    test("if adding an article returns an error, I should handle this error", () => {
+        const stock = new Stock();
+        expect(() => stock.addMovement(100, 0, "add")).toThrow();
+    });
+    test("if adding an article returns an error, I should handle this error", () => {
+        const stock = new Stock();
+        expect(() => stock.addMovement(100, 0, "remove")).toThrow();
+    });
+
+    test("if the type of operation is not valid, I should get an error", () => {
+        const stock = new Stock();
+        expect(() => stock.addMovement(0, 2, "invalid")).toThrow("Invalid type");
     });
 });

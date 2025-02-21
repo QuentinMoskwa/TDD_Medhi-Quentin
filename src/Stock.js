@@ -1,4 +1,5 @@
 const Article = require("./Article");
+const Movement = require("./Movement");
 class Stock {
   articles = [
     new Article(0, "Laptop", 10),
@@ -31,9 +32,9 @@ class Stock {
     }
     return (this.articles[idOfArticle].quantity += quantity);
   }
-  
-  showArticleQuantity(idOfArticle){
-    if(!this.checkIfIsInt(idOfArticle)){
+
+  showArticleQuantity(idOfArticle) {
+    if (!this.checkIfIsInt(idOfArticle)) {
       throw new Error("Invalid Id");
     }
 
@@ -42,51 +43,93 @@ class Stock {
     return this.articles[idOfArticle].quantity;
   }
 
-  removeStockArticle(idOfArticle, quantity){
-    if(!this.checkIfIsInt(idOfArticle)){
+  removeStockArticle(idOfArticle, quantity) {
+    if (!this.checkIfIsInt(idOfArticle)) {
       throw new Error("Id should be an Int");
     }
 
-    if(!this.checkIfIsInt(quantity)){
+    if (!this.checkIfIsInt(quantity)) {
       throw new Error("Quantity should be an Int");
     }
 
-    if(quantity <= 0){
+    if (quantity <= 0) {
       throw new Error("Quantity should be > 0");
     }
 
-    if(!this.checkIfPositive(idOfArticle)){
+    if (!this.checkIfPositive(idOfArticle)) {
       throw new Error("Id should be > 0");
     }
-
     this.checkIfArticleExist(idOfArticle);
 
-    if(quantity > this.articles[idOfArticle].quantity){
+    if (quantity > this.articles[idOfArticle].quantity) {
       throw new Error("Invalid quantity");
     }
 
-    return this.articles[idOfArticle].quantity -= quantity;
-
+    return (this.articles[idOfArticle].quantity -= quantity);
   }
-  
-  checkIfArticleExist(idOfArticle){
-    if(!this.articles.some(item => item.id === idOfArticle)){
+
+  checkIfArticleExist(idOfArticle) {
+    if (!this.articles.some((item) => item.id === idOfArticle)) {
       throw new Error("Article doesn't exist");
     }
   }
 
-  checkIfIsInt(number){
+  checkIfIsInt(number) {
     return Number.isInteger(number);
   }
 
-  checkIfPositive(number){
+  checkIfPositive(number) {
     return number >= 0;
   }
 
-  showReport()
-  {
-    return (this.articles);
+  showReport() {
+    return this.articles;
   }
+
+  addMovement(articleId, quantity, type) {
+    if (!this.checkIfIsInt(articleId)) {
+      throw new Error("Id should be an Int");
+    }
+
+    if (!this.checkIfIsInt(quantity)) {
+      throw new Error("Quantity should be an Int");
+    }
+
+    if (quantity <= 0) {
+      throw new Error("Quantity should be > 0");
+    }
+
+    if (!this.checkIfPositive(articleId)) {
+      throw new Error("Id should be > 0");
+    }
+
+    this.checkIfArticleExist(articleId);
+
+    if (type !== "add" && type !== "remove") {
+      throw new Error("Invalid type");
+    }
+
+    let newMovement;
+
+    if (type === "add") {
+      newMovement = new Movement(1, "add", articleId, "01/01/2025 12:00:00", quantity);
+    }
+    else {
+      newMovement = new Movement(1, "remove", articleId, "01/01/2025 12:00:00", quantity);
+    }
+
+    // create or add line to log file
+    
+
+    return newMovement;
+  }
+
+  generateDate() {
+    const now = new Date();
+    const localString = now.toLocaleString(); // Local time
+    return(localString);
+  }
+
 }
 
 module.exports = Stock;
