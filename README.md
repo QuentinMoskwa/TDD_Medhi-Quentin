@@ -49,3 +49,10 @@ Si l'ID ou quantité n'est pas un entier, une erreur est renvoyée.
 Si la quantité est négative, une erreur est renvoyée.
 Si la quantité est supérieure à celle en stock, une erreur est renvoyée.
 Si la quantité est égale à zéro, erreur (correction)
+
+Historique des mouvements
+Chaque ajout ou retrait d’article doit être enregistré avec une date et une quantité.
+
+
+Alertes sur stock faible
+Si la quantité d’un article tombe sous un certain seuil lors d'un retrait (ex: 5 unités), afficher un message d’alerte. Nous comptons sur vous pour adapter l’application.
