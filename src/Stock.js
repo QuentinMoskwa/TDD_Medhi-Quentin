@@ -1,5 +1,8 @@
 const Article = require("./Article");
 const Movement = require("./Movement");
+const fs = require('fs');
+const path = require('path');
+
 class Stock {
   articles = [
     new Article(0, "Laptop", 10),
@@ -96,10 +99,12 @@ class Stock {
     let newMovement;
 
     if (type === "add") {
-      newMovement = new Movement(1, "add", articleId, "01/01/2025 12:00:00", quantity);
+      newMovement = new Movement(1, "add", this.articles[articleId], "01/01/2025 12:00:00", quantity);
+      this.logMovementToFile(newMovement);
     }
     else {
-      newMovement = new Movement(1, "remove", articleId, "01/01/2025 12:00:00", quantity);
+      newMovement = new Movement(1, "remove", this.articles[articleId], "01/01/2025 12:00:00", quantity);
+      this.logMovementToFile(newMovement);
     }
 
     // create or add line to log file
@@ -138,6 +143,10 @@ class Stock {
     if (!this.checkIfPositive(id)) {
       throw new Error("Id should be > 0");
     }
+  }
+  logMovementToFile(movement, filePath = 'stock_movements.log') {
+    const movementString = movement.toString() + '\n'; // Add a newline for readability
+    fs.appendFileSync(path.resolve(__dirname, filePath), movementString);
   }
 }
 

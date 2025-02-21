@@ -174,14 +174,16 @@ describe("When I try to add a movement in the history", () => {
     test("adding with a valid id and quantity, I should add a movement in the history", () => {
         const stock = new Stock();
         const newMovement = stock.addMovement(0, 2, "add");
-        const movement = new Movement(1, "add", 0, "01/01/2025 12:00:00", 2);
+        const article = new Article(0, "Laptop", 10);
+        const movement = new Movement(1, "add", article, "01/01/2025 12:00:00", 2);
         expect(newMovement).toEqual(movement);
     });
 
     test("adding with a valid id and quantity, I should add a movement in the history", () => {
         const stock = new Stock();
         const newMovement = stock.addMovement(0, 2, "remove");
-        const movement = new Movement(1, "remove", 0, "01/01/2025 12:00:00", 2);
+        const article = new Article(0, "Laptop", 10);
+        const movement = new Movement(1, "remove", article, "01/01/2025 12:00:00", 2);
         expect(newMovement).toEqual(movement);
     });
 
