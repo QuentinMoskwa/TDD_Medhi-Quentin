@@ -18,13 +18,11 @@ class Stock {
     if (quantity == 0) {
       throw new Error("quantity must not be 0");
     }
-    if (Number.isInteger(idOfArticle) === false) {
-      throw new Error("id must be an integer");
-    }
-    if (Number.isInteger(quantity) === false) {
-      throw new Error("Quantity must be an integer");
-    }
-    if (quantity < 0) {
+
+    this.checkIdIsInt(idOfArticle);
+    this.checkQttIsInt(quantity);
+
+    if (!this.checkIfPositive(quantity)) {
       throw new Error("Quantity must be positive");
     }
     if (!(this.articles[idOfArticle] instanceof Article)) {
@@ -32,40 +30,34 @@ class Stock {
     }
     return (this.articles[idOfArticle].quantity += quantity);
   }
-
-  showArticleQuantity(idOfArticle) {
-    if (!this.checkIfIsInt(idOfArticle)) {
-      throw new Error("Invalid Id");
-    }
-
+  
+  showArticleQuantity(idOfArticle){
+    this.checkIdIsInt(idOfArticle);
     this.checkIfArticleExist(idOfArticle);
 
     return this.articles[idOfArticle].quantity;
   }
 
-  removeStockArticle(idOfArticle, quantity) {
-    if (!this.checkIfIsInt(idOfArticle)) {
-      throw new Error("Id should be an Int");
-    }
-
-    if (!this.checkIfIsInt(quantity)) {
-      throw new Error("Quantity should be an Int");
-    }
+  removeStockArticle(idOfArticle, quantity){
+    this.checkIdIsInt(idOfArticle);
+    this.checkQttIsInt(quantity);
 
     if (quantity <= 0) {
       throw new Error("Quantity should be > 0");
     }
 
-    if (!this.checkIfPositive(idOfArticle)) {
-      throw new Error("Id should be > 0");
-    }
+    this.checkIfIdPositive(idOfArticle);
     this.checkIfArticleExist(idOfArticle);
 
     if (quantity > this.articles[idOfArticle].quantity) {
       throw new Error("Invalid quantity");
     }
 
-    return (this.articles[idOfArticle].quantity -= quantity);
+    let result = this.articles[idOfArticle].quantity -= quantity;
+
+    this.notification(this.articles[idOfArticle].quantity);
+
+    return result
   }
 
   checkIfArticleExist(idOfArticle) {
@@ -87,22 +79,14 @@ class Stock {
   }
 
   addMovement(articleId, quantity, type) {
-    if (!this.checkIfIsInt(articleId)) {
-      throw new Error("Id should be an Int");
-    }
-
-    if (!this.checkIfIsInt(quantity)) {
-      throw new Error("Quantity should be an Int");
-    }
+    this.checkIdIsInt(articleId);
+    this.checkQttIsInt(quantity);
 
     if (quantity <= 0) {
       throw new Error("Quantity should be > 0");
     }
 
-    if (!this.checkIfPositive(articleId)) {
-      throw new Error("Id should be > 0");
-    }
-
+    this.checkIfIdPositive(articleId);
     this.checkIfArticleExist(articleId);
 
     if (type !== "add" && type !== "remove") {
@@ -130,6 +114,31 @@ class Stock {
     return(localString);
   }
 
+
+  notification(quantity){
+    const msg = "La quantité d'article est faible";
+    if(quantity < 5){
+      console.log(msg);
+    }
+  }
+
+  checkIdIsInt(id) {
+    if (!this.checkIfIsInt(id)) {
+      throw new Error("Id should be an Int");
+    }
+  }
+
+  checkQttIsInt(qtt) {
+    if (!this.checkIfIsInt(qtt)) {
+      throw new Error("Quantity should be an Int");
+    }
+  }
+
+  checkIfIdPositive(id){
+    if (!this.checkIfPositive(id)) {
+      throw new Error("Id should be > 0");
+    }
+  }
 }
 
 module.exports = Stock;
