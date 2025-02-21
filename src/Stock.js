@@ -18,16 +18,10 @@ class Stock {
   ];
 
   addArticleToStock(idOfArticle, quantity) {
-    if (quantity == 0) {
-      throw new Error("quantity must not be 0");
-    }
-
+    this.checkQtt(quantity);
     this.checkIdIsInt(idOfArticle);
     this.checkQttIsInt(quantity);
-
-    if (!this.checkIfPositive(quantity)) {
-      throw new Error("Quantity must be positive");
-    }
+    this.checkIfQttIsPositive(quantity);
     if (!(this.articles[idOfArticle] instanceof Article)) {
       throw new Error("Must be a valid article");
     }
@@ -44,11 +38,8 @@ class Stock {
   removeStockArticle(idOfArticle, quantity){
     this.checkIdIsInt(idOfArticle);
     this.checkQttIsInt(quantity);
-
-    if (quantity <= 0) {
-      throw new Error("Quantity should be > 0");
-    }
-
+    this.checkQtt(quantity);
+    this.checkIfQttIsPositive(quantity);
     this.checkIfIdPositive(idOfArticle);
     this.checkIfArticleExist(idOfArticle);
 
@@ -84,11 +75,7 @@ class Stock {
   addMovement(articleId, quantity, type) {
     this.checkIdIsInt(articleId);
     this.checkQttIsInt(quantity);
-
-    if (quantity <= 0) {
-      throw new Error("Quantity should be > 0");
-    }
-
+    this.checkIfQttIsPositive(quantity);
     this.checkIfIdPositive(articleId);
     this.checkIfArticleExist(articleId);
 
@@ -96,19 +83,18 @@ class Stock {
       throw new Error("Invalid type");
     }
 
-    let newMovement;
+    let newMovement = null;
 
     if (type === "add") {
       newMovement = new Movement(1, "add", this.articles[articleId], "01/01/2025 12:00:00", quantity);
-      this.logMovementToFile(newMovement);
     }
     else {
       newMovement = new Movement(1, "remove", this.articles[articleId], "01/01/2025 12:00:00", quantity);
-      this.logMovementToFile(newMovement);
     }
 
-    // create or add line to log file
-    
+    if(newMovement){
+      this.logMovementToFile(newMovement);
+    }
 
     return newMovement;
   }
@@ -145,8 +131,20 @@ class Stock {
     }
   }
   logMovementToFile(movement, filePath = 'stock_movements.log') {
-    const movementString = movement.toString() + '\n'; // Add a newline for readability
+    const movementString = movement.toString() + '\n';
     fs.appendFileSync(path.resolve(__dirname, filePath), movementString);
+  }
+
+  checkQtt(quantity){
+    if (quantity == 0) {
+      throw new Error("Quantity must not be 0");
+    }
+  }
+
+  checkIfQttIsPositive(qtt) {
+    if (!this.checkIfPositive(qtt)) {
+      throw new Error("Quantity must be positive");
+    }
   }
 }
 

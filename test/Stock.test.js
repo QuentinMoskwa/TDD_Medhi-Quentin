@@ -29,7 +29,7 @@ describe("When I try to add an article in the stock", () => {
 
     test("with a laptop with a quantity of 0, I should get an error", () => {
       const stock = new Stock();
-      expect(() => stock.addArticleToStock(0, 0)).toThrow("quantity must not be 0");
+      expect(() => stock.addArticleToStock(0, 0)).toThrow("Quantity must not be 0");
     });
 
     test("with a laptop with a string id, I should get an error", () => {
@@ -81,7 +81,7 @@ describe("When I try to remove an article in the stock", () => {
 
     test("with a quantity < 0, I should get error", () => {
         const stock = new Stock();
-        expect(() => stock.removeStockArticle(1, -3)).toThrow("Quantity should be > 0");
+        expect(() => stock.removeStockArticle(1, -3)).toThrow("Quantity must be positive");
     });
 
     test("with an id < 0, I should get error", () => {
@@ -97,7 +97,7 @@ describe("When I try to remove an article in the stock", () => {
 
     test("with a quantity  = 0, I should get error", () => {
         const stock = new Stock();
-        expect(() => stock.removeStockArticle(0, 0)).toThrow("Quantity should be > 0");
+        expect(() => stock.removeStockArticle(0, 0)).toThrow("Quantity must not be 0");
     });
 });
 
@@ -189,7 +189,7 @@ describe("When I try to add a movement in the history", () => {
 
     test("with a negative quantity, I should get an error", () => {
         const stock = new Stock();
-        expect(() => stock.addMovement(0, -2, "remove")).toThrow("Quantity should be > 0");
+        expect(() => stock.addMovement(0, -2, "remove")).toThrow("Quantity must be positive");
     });
 
     test("with an articleId that doesn't exist, I should get an error", () => {
