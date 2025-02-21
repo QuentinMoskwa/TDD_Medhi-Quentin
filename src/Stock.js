@@ -29,6 +29,7 @@ class Stock {
     if (!(this.articles[idOfArticle] instanceof Article)) {
       throw new Error("Must be a valid article");
     }
+    return (this.articles[idOfArticle].quantity += quantity);
   }
   
   showArticleQuantity(idOfArticle){
