@@ -54,20 +54,22 @@ Si la quantité est égale à zéro, erreur (correction)
 
 Chaque ajout ou retrait d’article doit être enregistré avec une date et une quantité.
 
-Lorsque j'ajoute ou retire un article du stock : 
-- Si l'article existe et que je décide d'ajouter un article au stock alors un mouvement est ajouté dans l'historique avec la date et la quantité de ce mouvement.
+Lorsque j'essaye d'ajouter un mouvement dans l'historique : 
+- Si l'article existe et que je décide d'ajouter un article au stock alors un mouvement est ajouté dans l'historique avec la date, heure et la quantité de ce mouvement.
 
 - Si l'article existe et que je décide d'enlever un article qui contient assez de quantité au stock alors un mouvement est ajouté dans l'historique avec la date et la quantité de ce mouvement.
 
 - Si l'article existe et que je décide d'enlever plus de quantité que de stock alors j'ai une erreur.
 
-- Si la quantité de l'article est négative et que j'essaye de retirer alors j'ai une erreur ??? 
+- Si la quantité de l'article est négative et que j'essaye de retirer alors j'ai une erreur.
 
-- Si l'article existe et que je décide d'ajouter un article au stock mais que la date est invalide alors j'ai une erreur
+- Si l'article n'existe pas alors je retourne une erreur.
 
-- Si l'article dont j'essaye de modifier la quantité n'existe pas alors je retourne une erreur.
+- Si la valeur de la quantité n'est pas valide alors je retourne une erreur.
 
-- Si l'article dont j'essaye de modifier la quantité existe mais que la valeur pour la quantité n'est pas valide alors j'ai une erreur.
+- Si l'ajout d'article retourne une erreur alors je traite cette erreur
+
+- Si le retrait d'article retourne une erreur alors je traite cette erreur
 
 
 
@@ -85,16 +87,19 @@ Lorsque que je retire un article :
 Questions :
 - Mouvement:
 id
-article ?
+type (ajout, retrait)
+article
 date
+heure
 quantité
 
-- Historique(Mouvement1,Mouvement2,Mouvement3,...) ?
+- Historique(Mouvement1,Mouvement2,Mouvement3,...) ? 
+faire un fichier de log json. Pas besoin de montrer l'historique
 
-- date générée dans la fonction ?
+- date générée dans la fonction
 
-- Est-ce que le seuil est fixe ou dois-t on le donner ?
+- Le seuil est fixe
 
-- (question dois ton logger dans la liste si il y a une erreur ou juste afficher une erreur et ne rien faire de plus)
+- Pas de log d'erreur dans l'historique
 
-- Dois t'on afficher l'historique
+- Pour l'alerte doit return un message
